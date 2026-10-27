@@ -1,0 +1,14 @@
+{
+  "name": "loopwright-agent",
+  "version": "0.1.0",
+  "description": "Self-correcting coding agent runner, packaged as a Nebius Serverless Job",
+  "type": "module",
+  "private": true,
+  "main": "agent-runner.js",
+  "scripts": {
+    "start": "node agent-runner.js"
+  },
+  "dependencies": {
+    "playwright-core": "^1.48.0"
+  }
+}

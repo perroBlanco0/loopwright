@@ -1,0 +1,9 @@
+{
+  "name": "loopwright-fixture-broken-math",
+  "version": "1.0.0",
+  "private": true,
+  "main": "math.js",
+  "scripts": {
+    "test": "node --test test.js"
+  }
+}

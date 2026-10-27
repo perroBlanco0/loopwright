@@ -1,0 +1,186 @@
+:root {
+  color-scheme: dark;
+  --bg: #0f1115;
+  --panel: #171a21;
+  --border: #2a2f3a;
+  --text: #e6e8ec;
+  --muted: #8b92a3;
+  --accent: #6ee7b7;
+  --fail: #f87171;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.app-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+.app-header p {
+  color: var(--muted);
+  margin-top: 0;
+}
+
+.mission-form {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.mode-toggle {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mode-toggle button,
+.form-actions button {
+  background: #1f232c;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.mode-toggle button.active {
+  background: var(--accent);
+  color: #0f1115;
+  font-weight: 600;
+}
+
+input,
+textarea {
+  background: #0f1115;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.panels {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 720px) {
+  .panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+.live-panel,
+.result-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.checklist ol {
+  padding-left: 1.25rem;
+  color: var(--muted);
+}
+
+.status-badge {
+  display: inline-block;
+  background: #1f232c;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+  margin-bottom: 0.75rem;
+}
+
+.log {
+  max-height: 420px;
+  overflow-y: auto;
+  font-family: 'Cascadia Code', Consolas, monospace;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.log-line {
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--muted);
+}
+
+.log-tool_call {
+  color: #93c5fd;
+}
+.log-diff {
+  color: var(--accent);
+}
+.log-command_result {
+  color: #fbbf24;
+}
+.log-mission_end {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.badge-success {
+  background: rgba(110, 231, 183, 0.15);
+  color: var(--accent);
+}
+
+.badge-failed {
+  background: rgba(248, 113, 113, 0.15);
+  color: var(--fail);
+}
+
+.screenshot img {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.usage ul {
+  list-style: none;
+  padding: 0;
+  color: var(--muted);
+}
+
+details pre {
+  background: #0f1115;
+  padding: 0.75rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.75rem;
+}

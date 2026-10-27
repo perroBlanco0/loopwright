@@ -1,0 +1,16 @@
+{
+  "name": "loopwright-orchestrator",
+  "version": "0.1.0",
+  "description": "Submits Loopwright missions as Nebius Serverless Jobs and streams their progress over SSE",
+  "type": "module",
+  "private": true,
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "cors": "^2.8.5"
+  }
+}
