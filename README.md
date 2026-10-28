@@ -1,5 +1,7 @@
 # Loopwright
 
+**Live demo:** https://loopwright.byrongonzalez.me
+
 Loopwright is a self-correcting coding agent built for the **Nebius x NVIDIA Global AI Hackathon** (Coding and Agentic Engineering track). It writes code, runs it, reads the errors, and iterates — on its own — until the mission succeeds or it runs out of budget.
 
 Given either a repo with failing tests or a short spec for a small app, Loopwright plans a checklist, then loops: call a tool (`read_file` / `write_file` / `run_command`), inspect the result, adjust, repeat. When it believes it's done it calls `finish`, and a verification pass (test run, plus a real headless-browser screenshot in build-spec mode) confirms it actually works before declaring success.
