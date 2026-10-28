@@ -1,13 +1,21 @@
 :root {
-  color-scheme: dark;
-  --bg: #0f1115;
-  --panel: #171a21;
-  --border: #2a2f3a;
-  --text: #e6e8ec;
-  --muted: #8b92a3;
-  --accent: #6ee7b7;
-  --fail: #f87171;
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  color-scheme: light;
+  --bg: #f4f5f7;
+  --panel: #ffffff;
+  --border: #dfe1e6;
+  --text: #172b4d;
+  --muted: #5e6c84;
+  --accent: #0052cc;
+  --accent-light: #deebff;
+  --success: #00875a;
+  --success-bg: #e3fcef;
+  --fail: #de350b;
+  --fail-bg: #ffebe6;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
@@ -16,26 +24,104 @@ body {
   color: var(--text);
 }
 
-.app {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.app-header h1 {
-  font-size: 2rem;
-  margin-bottom: 0.25rem;
+.topbar {
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.topbar-logo {
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topbar-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--text);
+}
+
+.topbar-meta {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.topbar-author {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.topbar-sep {
+  margin: 0 0.4rem;
+}
+
+.app {
+  flex: 1;
+  max-width: 1040px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.75rem 1.5rem 3rem;
 }
 
 .app-header p {
   color: var(--muted);
-  margin-top: 0;
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+}
+
+.notice-bar {
+  background: var(--accent-light);
+  border: 1px solid #b3d4ff;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+  color: #0747a6;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+.concurrency-toast {
+  background: #fffae6;
+  border: 1px solid #ffe380;
+  color: #974f0c;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
 }
 
 .mission-form {
   background: var(--panel);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(9, 30, 66, 0.08);
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
@@ -50,29 +136,50 @@ body {
 
 .mode-toggle button,
 .form-actions button {
-  background: #1f232c;
+  background: #f4f5f7;
   color: var(--text);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 0.5rem 1rem;
   cursor: pointer;
+  font-weight: 500;
 }
 
 .mode-toggle button.active {
   background: var(--accent);
-  color: #0f1115;
+  border-color: var(--accent);
+  color: #fff;
   font-weight: 600;
+}
+
+.form-actions button[type='submit'] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.form-actions button[type='submit']:disabled {
+  background: #a5adba;
+  border-color: #a5adba;
+  cursor: not-allowed;
 }
 
 input,
 textarea {
-  background: #0f1115;
+  background: #fff;
   color: var(--text);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 0.6rem 0.75rem;
   font-family: inherit;
   font-size: 0.95rem;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
 }
 
 .form-actions {
@@ -97,22 +204,34 @@ textarea {
 .result-panel {
   background: var(--panel);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(9, 30, 66, 0.08);
   padding: 1rem;
+}
+
+.checklist h3 {
+  margin-top: 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .checklist ol {
   padding-left: 1.25rem;
-  color: var(--muted);
+  color: var(--text);
+  font-size: 0.9rem;
 }
 
 .status-badge {
   display: inline-block;
-  background: #1f232c;
-  border: 1px solid var(--border);
+  background: var(--accent-light);
+  border: 1px solid #b3d4ff;
+  color: #0747a6;
   border-radius: 999px;
   padding: 0.25rem 0.75rem;
   font-size: 0.8rem;
+  font-weight: 600;
   margin-bottom: 0.75rem;
 }
 
@@ -125,6 +244,9 @@ textarea {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
+  background: #f4f5f7;
+  border-radius: 6px;
+  padding: 0.6rem;
 }
 
 .log-line {
@@ -134,13 +256,13 @@ textarea {
 }
 
 .log-tool_call {
-  color: #93c5fd;
+  color: #0052cc;
 }
 .log-diff {
-  color: var(--accent);
+  color: var(--success);
 }
 .log-command_result {
-  color: #fbbf24;
+  color: #974f0c;
 }
 .log-mission_end {
   color: var(--text);
@@ -153,21 +275,22 @@ textarea {
   border-radius: 999px;
   font-weight: 700;
   margin-bottom: 0.5rem;
+  font-size: 0.85rem;
 }
 
 .badge-success {
-  background: rgba(110, 231, 183, 0.15);
-  color: var(--accent);
+  background: var(--success-bg);
+  color: var(--success);
 }
 
 .badge-failed {
-  background: rgba(248, 113, 113, 0.15);
+  background: var(--fail-bg);
   color: var(--fail);
 }
 
 .screenshot img {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid var(--border);
 }
 
@@ -178,9 +301,28 @@ textarea {
 }
 
 details pre {
-  background: #0f1115;
+  background: #f4f5f7;
   padding: 0.75rem;
-  border-radius: 8px;
+  border-radius: 6px;
   overflow-x: auto;
   font-size: 0.75rem;
+  border: 1px solid var(--border);
+}
+
+.app-footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.app-footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.app-footer a:hover {
+  text-decoration: underline;
 }

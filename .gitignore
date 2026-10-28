@@ -4,3 +4,4 @@ dist/
 *.log
 .nebius-cli/
 demo/recordings/
+.vm-access.txt

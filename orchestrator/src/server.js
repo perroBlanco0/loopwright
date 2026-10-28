@@ -23,6 +23,14 @@ function broadcast(mission, event) {
   }
 }
 
+app.get('/api/status', (req, res) => {
+  let activeMissions = 0;
+  for (const mission of missions.values()) {
+    if (mission.status === 'running') activeMissions += 1;
+  }
+  res.json({ activeMissions });
+});
+
 app.post('/api/missions', (req, res) => {
   const { mode, repoUrl, spec } = req.body || {};
   if (mode !== 'fix-tests' && mode !== 'build-spec') {
