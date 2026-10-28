@@ -65,7 +65,8 @@ async function run() {
   await page.click('.form-actions button[type="submit"]');
 
   // Wait for the mission to finish: ResultPanel renders a .badge when mission_end arrives.
-  await page.waitForSelector('.badge', { timeout: 180_000 });
+  // build-spec missions can legitimately take several minutes on this shared host.
+  await page.waitForSelector('.badge', { timeout: 330_000 });
   await sleep(3000); // let the final frame sit for a moment before cutting
 
   await context.close();
