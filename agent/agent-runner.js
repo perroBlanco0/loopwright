@@ -134,12 +134,22 @@ async function run() {
       }
 
       emit('tool_call', { name: call.function.name, args: truncateArgs(args) });
-      const result = await tools.call(call.function.name, args);
 
-      if (call.function.name === 'write_file') {
+      let result;
+      try {
+        result = await tools.call(call.function.name, args);
+      } catch (err) {
+        // A malformed or nonexistent tool call is a model mistake, not a mission-ending
+        // failure — feed the error back so the model can self-correct, same as a failed command.
+        result = { error: String(err.message || err) };
+        emit('log', { message: `Tool call failed: ${result.error}` });
+        consecutiveFailures += 1;
+      }
+
+      if (call.function.name === 'write_file' && result.bytes !== undefined) {
         emit('diff', { path: args.path, bytes: result.bytes });
       }
-      if (call.function.name === 'run_command') {
+      if (call.function.name === 'run_command' && result.exitCode !== undefined) {
         emit('command_result', {
           command: args.command,
           exitCode: result.exitCode,

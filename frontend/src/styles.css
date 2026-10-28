@@ -460,3 +460,90 @@ details pre {
 .confetti-piece-3 { background: #ff5630; }
 .confetti-piece-4 { background: #6554c0; }
 .confetti-piece-5 { background: #00b8d9; }
+
+/* --- pipeline stages --- */
+
+.pipeline {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(9, 30, 66, 0.08);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.pipeline-stages {
+  display: flex;
+  align-items: center;
+}
+
+.pipeline-connector {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  margin: 0 0.25rem;
+  margin-bottom: 1.4rem;
+}
+
+.pipeline-connector.done {
+  background: var(--success);
+}
+
+.pipeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.pipeline-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--panel);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.pipeline-step.done .pipeline-dot {
+  border-color: var(--success);
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.pipeline-step.failed .pipeline-dot {
+  border-color: var(--fail);
+  background: var(--fail-bg);
+  color: var(--fail);
+}
+
+.pipeline-step.active .pipeline-dot {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  color: var(--accent);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.pipeline-step.active .pipeline-label {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.pipeline-label {
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.pipeline-detail {
+  margin: 0.75rem 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-align: center;
+}

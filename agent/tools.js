@@ -89,7 +89,7 @@ export function makeTools(workspaceDir) {
         };
       }
     }
-    throw new Error(`Unknown tool: ${name}`);
+    throw new Error(`Unknown tool: ${name}. Available tools: read_file, write_file, run_command, finish.`);
   }
 
   return { definitions, call };

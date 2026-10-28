@@ -3,6 +3,7 @@ import MissionForm from './MissionForm.jsx';
 import LivePanel from './LivePanel.jsx';
 import ResultPanel from './ResultPanel.jsx';
 import WaitingPanel from './WaitingPanel.jsx';
+import PipelineStages from './PipelineStages.jsx';
 
 const API_BASE = import.meta.env.VITE_API_BASE || '';
 const BASE_TITLE = 'Loopwright';
@@ -171,10 +172,13 @@ export default function App() {
         <MissionForm disabled={status === 'running'} onSubmit={startMission} onReset={reset} />
 
         {missionId && (
-          <div className="panels">
-            <LivePanel events={events} elapsedSeconds={elapsedSeconds} status={status} />
-            {missionEnd ? <ResultPanel event={missionEnd} /> : <WaitingPanel events={events} />}
-          </div>
+          <>
+            <PipelineStages events={events} status={status} />
+            <div className="panels">
+              <LivePanel events={events} elapsedSeconds={elapsedSeconds} status={status} />
+              {missionEnd ? <ResultPanel event={missionEnd} /> : <WaitingPanel events={events} />}
+            </div>
+          </>
         )}
       </div>
 
