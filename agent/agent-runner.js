@@ -91,7 +91,14 @@ async function run() {
     'self-correct, iterating until the mission succeeds. Always use tools to inspect and change ' +
     'files and to run commands — never just describe what you would do. Prefer plain JavaScript ' +
     'with no build/compile step (no TypeScript, no bundler) unless the mission explicitly requires ' +
-    'it — fewer moving parts means fewer ways to fail within the iteration budget. Remember: in ' +
+    'it — fewer moving parts means fewer ways to fail within the iteration budget. For build-spec ' +
+    'missions, put package.json, the source, and tests directly at the workspace root — never ' +
+    'inside a named project subdirectory — because verification runs "npm test"/"npm start" from ' +
+    'the workspace root. Never run "npm start", background processes ("&"), or kill/inspect ports ' +
+    'yourself — verification boots the app automatically after you finish. Once "npm test" passes, ' +
+    'call "finish" right away. Export the request handler from its own module and only call ' +
+    'listen() when the server file is run directly (e.g. guarded by require.main === module), so ' +
+    'tests that import the handler never bind the port. Remember: in ' +
     "Node's built-in test runner, import assertions from \"node:assert\" (e.g. assert.strictEqual), " +
     'not from "node:test" — only test/describe/it come from "node:test". When you believe ' +
     `the mission is complete, call "finish". Checklist for this mission:\n${todos.map((t, i) => `${i + 1}. ${t}`).join('\n')}`;

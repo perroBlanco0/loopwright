@@ -74,6 +74,18 @@ export function makeTools(workspaceDir) {
       return { ok: true, bytes: Buffer.byteLength(args.content, 'utf8') };
     }
     if (name === 'run_command') {
+      // Prompt instructions alone didn't stop models from booting the server by hand and then
+      // burning the iteration budget fighting EADDRINUSE — so enforce it here.
+      if (/\bnpm\s+(run\s+)?start\b|&\s*$|\b(pkill|killall|fuser|kill)\b/.test(args.command)) {
+        return {
+          exitCode: 1,
+          stdout: '',
+          stderr:
+            'Blocked: do not start servers, run background processes, or kill processes. ' +
+            'Verification boots the app automatically after you call "finish". ' +
+            'If "npm test" passes, call "finish" now.',
+        };
+      }
       try {
         const { stdout, stderr } = await execFileAsync('bash', ['-lc', args.command], {
           cwd: workspaceDir,

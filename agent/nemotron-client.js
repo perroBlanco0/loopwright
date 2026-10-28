@@ -55,6 +55,13 @@ async function chatCompletion({ model, messages, tools, toolChoice = 'auto', tem
  * need more than Nano, which is what keeps the $25 budget from Fase 0 comfortable.
  */
 export function pickModelForIteration(consecutiveFailures) {
+  // Demo-recording override only — lets us force the biggest model for every
+  // iteration when capturing footage, without touching the cost-saving escalation
+  // policy real missions use. Unset in production.
+  if (process.env.FORCE_TIER && MODELS[process.env.FORCE_TIER]) {
+    const tier = process.env.FORCE_TIER;
+    return { tier, model: MODELS[tier] };
+  }
   if (consecutiveFailures >= 4) return { tier: 'ultra', model: MODELS.ultra };
   if (consecutiveFailures >= 2) return { tier: 'super', model: MODELS.super };
   return { tier: 'nano', model: MODELS.nano };

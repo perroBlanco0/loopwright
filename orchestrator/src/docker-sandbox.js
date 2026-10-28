@@ -28,6 +28,8 @@ export function runMission(mission, onEvent) {
   if (process.env.NEBIUS_MODEL_NANO) args.push('-e', `NEBIUS_MODEL_NANO=${process.env.NEBIUS_MODEL_NANO}`);
   if (process.env.NEBIUS_MODEL_SUPER) args.push('-e', `NEBIUS_MODEL_SUPER=${process.env.NEBIUS_MODEL_SUPER}`);
   if (process.env.NEBIUS_MODEL_ULTRA) args.push('-e', `NEBIUS_MODEL_ULTRA=${process.env.NEBIUS_MODEL_ULTRA}`);
+  // Demo-recording override only — see pickModelForIteration in agent/nemotron-client.js.
+  if (process.env.FORCE_TIER) args.push('-e', `FORCE_TIER=${process.env.FORCE_TIER}`);
   args.push(IMAGE);
 
   const proc = spawn('docker', args);
