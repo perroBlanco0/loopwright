@@ -77,6 +77,14 @@ frontend/         React/Vite UI: mission form, live event panel, result panel
 examples/         Fixture repo used to demo fix-tests mode
 ```
 
+## Nebius Token Factory Sandboxes (beta)
+
+Loopwright's main pipeline runs code in a local Docker container per mission. Separately, we validated **Nebius Token Factory Sandboxes** (beta, Contree SDK) as a forward-looking execution backend: `demo/sandbox-smoke-test.py` authenticates against a real Sandboxes project, boots an isolated `python:3.12-slim` sandbox, installs a system package at runtime, and executes model-generated code inside it end to end. This is a proof-of-concept, not yet wired into the production mission loop — see "What's next" below.
+
+## Demo recordings
+
+`demo/record.js` drives the real frontend with Playwright (headless) against a live mission and records the browser to video — no manual screen capture needed. Run `node demo/record.js fix-tests` or `node demo/record.js build-spec` against a running orchestrator + frontend to reproduce the clips in `demo/recordings/`.
+
 ## Prior work disclosure
 
 This architecture (plan → tool-calling loop → sandboxed execution → live event streaming) builds on patterns I explored in an earlier personal project, **open-studio**, submitted to a different hackathon (GitLab Duo/Transcend). Loopwright is a from-scratch rewrite for this hackathon: new model layer (NVIDIA Nemotron via Nebius Token Factory instead of the earlier project's model/CLI stack), new sandboxing approach, new branding, and a different problem framing (general self-correcting coding agent vs. that project's GitLab-integrated workflow). No code, assets, or branding from open-studio were reused.

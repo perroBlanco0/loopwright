@@ -63,7 +63,7 @@ async function prepareWorkspace() {
   }
   // build-spec: start from an empty workspace, let the agent scaffold everything.
   emit('log', { message: 'Starting from an empty workspace for build-spec mode' });
-  return `Build a small working Node.js/TypeScript app matching this spec from scratch:\n\n${SPEC}\n\n` +
+  return `Build a small working Node.js app matching this spec from scratch:\n\n${SPEC}\n\n` +
     'Include a package.json with a "build" and "start" script, and at least one automated test. ' +
     'The app should expose an HTTP server so it can be verified by requesting it.';
 }

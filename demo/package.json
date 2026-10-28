@@ -1,0 +1,11 @@
+{
+  "name": "loopwright-demo-recorder",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "record": "node record.js"
+  },
+  "dependencies": {
+    "playwright-core": "^1.47.0"
+  }
+}
