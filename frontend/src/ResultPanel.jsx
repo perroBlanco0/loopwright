@@ -5,14 +5,26 @@ function formatUsage(usageByTier = {}) {
   return { total, ...usageByTier };
 }
 
+const CONFETTI = Array.from({ length: 14 }, (_, i) => i);
+
 export default function ResultPanel({ event }) {
   const { status, finalSummary, verification, usageByTier } = event;
   const usage = formatUsage(usageByTier);
   const screenshot = verification?.appResult?.screenshotBase64;
+  const succeeded = status === 'success';
 
   return (
     <div className="result-panel">
-      <div className={`badge badge-${status}`}>{status === 'success' ? '✓ Success' : '✗ Failed'}</div>
+      <div className={`badge badge-${status} ${succeeded ? 'badge-celebrate' : 'badge-shake'}`}>
+        {succeeded && (
+          <span className="confetti" aria-hidden="true">
+            {CONFETTI.map((i) => (
+              <span key={i} className={`confetti-piece confetti-piece-${i % 6}`} style={{ '--i': i }} />
+            ))}
+          </span>
+        )}
+        {succeeded ? '✓ Success' : '✗ Failed'}
+      </div>
       <p className="summary">{finalSummary}</p>
 
       {screenshot && (

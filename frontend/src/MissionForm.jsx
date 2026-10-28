@@ -57,7 +57,14 @@ export default function MissionForm({ disabled, onSubmit, onReset }) {
 
       <div className="form-actions">
         <button type="submit" disabled={disabled}>
-          {disabled ? 'Running…' : 'Start mission'}
+          {disabled ? (
+            <>
+              <span className="spinner spinner-sm spinner-inline" aria-hidden="true" />
+              Running…
+            </>
+          ) : (
+            'Start mission'
+          )}
         </button>
         <button type="button" onClick={onReset} disabled={disabled}>
           Reset

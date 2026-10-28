@@ -21,7 +21,7 @@ function describe(event) {
     case 'agent_loop_end':
       return `Agent loop finished: ${event.finalSummary}`;
     case 'verification_start':
-      return 'Running final verification…';
+      return null; // rendered separately as a dedicated block
     case 'verification_result':
       return `Verification: ${event.passed ? 'PASSED' : 'FAILED'}`;
     case 'mission_end':
@@ -31,7 +31,13 @@ function describe(event) {
   }
 }
 
-export default function LivePanel({ events }) {
+function formatElapsed(seconds) {
+  const mm = String(Math.floor(seconds / 60)).padStart(2, '0');
+  const ss = String(seconds % 60).padStart(2, '0');
+  return `${mm}:${ss}`;
+}
+
+export default function LivePanel({ events, elapsedSeconds = 0, status }) {
   const logRef = useRef(null);
   useEffect(() => {
     logRef.current?.scrollTo(0, logRef.current.scrollHeight);
@@ -39,6 +45,9 @@ export default function LivePanel({ events }) {
 
   const plan = events.find((e) => e.type === 'plan');
   const lastIteration = [...events].reverse().find((e) => e.type === 'iteration_start');
+  const verifying = events.some((e) => e.type === 'verification_start') &&
+    !events.some((e) => e.type === 'verification_result');
+  const isRunning = status === 'running';
 
   return (
     <div className="live-panel">
@@ -53,10 +62,19 @@ export default function LivePanel({ events }) {
         </div>
       )}
 
-      {lastIteration && (
-        <div className="status-badge">
-          Iteration {lastIteration.iteration + 1} — {TIER_LABEL[lastIteration.tier] || lastIteration.tier}
+      {verifying ? (
+        <div className="verifying-block">
+          <span className="spinner spinner-sm" aria-hidden="true" />
+          <span>Verifying — running tests{/* and, for build-spec, booting the app */}…</span>
         </div>
+      ) : (
+        lastIteration && (
+          <div className="status-badge">
+            {isRunning && <span className="live-dot" aria-hidden="true" />}
+            Iteration {lastIteration.iteration + 1} — {TIER_LABEL[lastIteration.tier] || lastIteration.tier}
+            {isRunning && <span className="elapsed-timer">{formatElapsed(elapsedSeconds)}</span>}
+          </div>
+        )
       )}
 
       <div className="log" ref={logRef}>
