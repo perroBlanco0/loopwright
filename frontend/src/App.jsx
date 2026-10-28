@@ -149,10 +149,20 @@ export default function App() {
         </div>
       </nav>
 
+      <section className="hero">
+        <div className="hero-inner">
+          <span className="hero-eyebrow">Nebius x NVIDIA Global AI Hackathon</span>
+          <h1 className="hero-title">Code that fixes itself.</h1>
+          <p className="hero-sub">
+            Loopwright writes code, runs it, reads the real error, and tries again — powered by{' '}
+            <strong>NVIDIA Nemotron</strong> on <strong>Nebius Token Factory</strong>. Give it a broken repo or a
+            one-paragraph spec and watch it work.
+          </p>
+        </div>
+      </section>
+
       <div className="app">
-        <header className="app-header">
-          <p>A self-correcting coding agent, powered by NVIDIA Nemotron on Nebius Token Factory.</p>
-        </header>
+        <MissionForm disabled={status === 'running'} onSubmit={startMission} onReset={reset} />
 
         <div className="notice-bar">
           <strong>Demo notes:</strong> code execution runs sandboxed (one isolated Docker container per mission).
@@ -169,7 +179,30 @@ export default function App() {
           </div>
         )}
 
-        <MissionForm disabled={status === 'running'} onSubmit={startMission} onReset={reset} />
+        {!missionId && (
+          <div className="how-it-works">
+            <div className="how-step">
+              <span className="how-icon">1</span>
+              <h3>Plan</h3>
+              <p>Nemotron reads the repo or spec and writes a concrete checklist before touching any code.</p>
+            </div>
+            <div className="how-connector" aria-hidden="true" />
+            <div className="how-step">
+              <span className="how-icon">2</span>
+              <h3>Code &amp; test</h3>
+              <p>
+                It loops — read, write, run — starting on Nemotron Nano and escalating to Super or Ultra only
+                when it gets stuck.
+              </p>
+            </div>
+            <div className="how-connector" aria-hidden="true" />
+            <div className="how-step">
+              <span className="how-icon">3</span>
+              <h3>Verify</h3>
+              <p>Tests re-run for real, and generated apps get booted and screenshotted — proof, not a claim.</p>
+            </div>
+          </div>
+        )}
 
         {missionId && (
           <>
