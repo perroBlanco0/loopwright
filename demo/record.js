@@ -62,17 +62,32 @@ async function run() {
   }
 
   await sleep(1000); // beat for the narration cut later
+  try {
+    await recordMission(page);
+  } finally {
+    // Always close, or a failed run leaves headless Edge recording forever.
+    await context.close();
+    await browser.close();
+  }
+  console.log('Done. Video saved under demo/recordings/*.webm');
+}
+
+async function recordMission(page) {
   await page.click('.form-actions button[type="submit"]');
 
   // Wait for the mission to finish: ResultPanel renders a .badge when mission_end arrives.
   // build-spec missions can legitimately take several minutes on this shared host.
   await page.waitForSelector('.badge', { timeout: 330_000 });
-  await sleep(3000); // let the final frame sit for a moment before cutting
+  await sleep(2000);
 
-  await context.close();
-  await browser.close();
-
-  console.log('Done. Video saved under demo/recordings/*.webm');
+  // The result panel sits below the fold — scroll so the summary and the verification
+  // screenshot are actually on camera.
+  await page.evaluate(() => document.querySelector('.result-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  await sleep(3000);
+  if (await page.$('.screenshot img')) {
+    await page.evaluate(() => document.querySelector('.screenshot')?.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+    await sleep(4000);
+  }
 }
 
 run().catch((err) => {
